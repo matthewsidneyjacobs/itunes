@@ -25,10 +25,31 @@ angular.module('itunes').controller('mainCtrl', function($scope, itunesService){
   //Also note that that method should be retuning a promise, so you could use .then in this function.
 
     //Code here
+
+    var parseSongs = function(songs){
+      var finalSongs = [];
+        for(var i = 0; i < songs.length; i++){
+          var correctData = {};
+          correctData['Play'] = songs[i].previewUrl;
+          correctData['Song'] = songs[i].trackname;
+          correctData['Artist'] = songs[i].artistName;
+          correctData['Collection'] = songs[i].collectionName;
+          correctData['AlbumArt'] = songs[i].artworkUrl100;
+          correctData['Type'] = songs[i].kind;
+          correctData['Individual Price'] = songs[i].trackPrice;
+          correctData['CollectionPrice'] = songs[i].collectionPrice;
+          finalSongs.push(correctData);
+        }
+  return finalSongs;
+};
+
+
     $scope.getSongData = function() {
-      itunesService.getSong($scope.artist).then(function(dataFromService){
-        $scope.songData = dataFromService;
+      itunesService.getSongs($scope.artist).then(function(data){
+        $scope.songData = parseSongs(data.data.results)
+        // console.log(data)
       })
+
     }
 
 

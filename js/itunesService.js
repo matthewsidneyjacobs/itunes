@@ -8,18 +8,43 @@ angular.module('itunes').service('itunesService', function($http, $q){
   //You can return the http request or you can make your own promise in order to manipulate the data before you resolve it.
 
     //Code here
-    this.getSong = function(artist) {
-      var deferred = $q.defer();
-      $http({
+    // this.getSong = function(artist) {
+    //   var deferred = $q.defer();
+    //   $http ({
+    //     method: 'JSONP',
+    //     url: 'https://itunes.apple.com/search?term=' + artist + '&callback=JSON_CALLBACK'
+    //   }).then(function(response){
+    //     console.log(response)
+    //     // var response = response.data
+    //     deferred.resolve(response.data)
+    //   })
+    //   return deferred.promise
+    // }
+
+    //
+    this.getSongs = function(artist){
+      return $http({
         method: 'JSONP',
         url: 'https://itunes.apple.com/search?term=' + artist + '&callback=JSON_CALLBACK'
-      }).then(function(response) {
-        deferred.resolve(response)
       })
-      return deferred.promise;
     }
 
-
+//     var parseSongs = function(songs){
+//       var finalSongs = [];
+//   for(var i = 0; i < songs.length; i++){
+//     var correctData = {};
+//     correctData['Play'] = songs[i].previewUrl;
+//     correctData['Song'] = songs[i].trackname;
+//     correctData['Artist'] = songs[i].artistName;
+//     correctData['Collection'] = songs[i].collectionName;
+//     correctData['AlbumArt'] = songs[i].artworkUrl100;
+//     correctData['Type'] = songs[i].kind;
+//     correctData['Individual Price'] = songs[i].trackPrice;
+//     correctData['CollectionPrice'] = songs[i].collectionPrice;
+//     finalSongs.push(correctData);
+//   }
+//   return finalSongs;
+// };
 
 
     // Go to the next step in the README (Tie in your controller). You will come back to these instructions shortly.
